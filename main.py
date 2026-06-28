@@ -4,9 +4,14 @@ import matplotlib.pyplot as plt
 import scipy.stats as stats
 import statsmodels.api as sm
 import seaborn as sns
+import os
 
-# 1. CARREGAMENTO DOS DADOS
-df = pd.read_csv('db.csv')
+# Cria a pasta de imagens se ela não existir
+if not os.path.exists('images'):
+    os.makedirs('images')
+
+# 1. CARREGAMENTO DOS DADOS (Caminho atualizado)
+df = pd.read_csv('database/db.csv')
 
 # --- ETAPA 2: LIMPEZA ---
 for col in df.columns:
@@ -35,7 +40,7 @@ plt.title('Distribuição GPA Final')
 plt.xlabel('GPA Final')
 plt.ylabel('Frequência')
 plt.tight_layout()
-plt.savefig('distribuicao_gpa.png')
+plt.savefig('images/distribuicao_gpa.png') # Pasta images
 plt.close()
 
 # Boxplot
@@ -44,24 +49,20 @@ sns.boxplot(y=df['Post_Semester_GPA'], color='lightgreen')
 plt.title('Boxplot GPA Final')
 plt.ylabel('GPA Final')
 plt.tight_layout()
-plt.savefig('boxplot_gpa.png')
+plt.savefig('images/boxplot_gpa.png') # Pasta images
 plt.close()
 
 # --- ETAPA 4: MATRIZ DE CORRELAÇÃO ---
-# Renomeamos as colunas ANTES de calcular a correlação
 df_plot = df.rename(columns=traducao_colunas)
-
-# Selecionamos apenas as colunas que agora possuem nomes em português
 colunas_pt = [traducao_colunas[c] for c in traducao_colunas if c in df.columns]
 correlacao = df_plot[colunas_pt].corr(method='pearson')
 
 plt.figure(figsize=(10, 8))
-# Ajuste fino: usamos o próprio dataframe de correlação renomeado
 sns.heatmap(correlacao, annot=True, cmap='coolwarm', fmt=".2f", 
             xticklabels=correlacao.columns, yticklabels=correlacao.columns)
 plt.title('Matriz de Correlação')
 plt.tight_layout()
-plt.savefig('matriz_correlação.png')
+plt.savefig('images/matriz_correlacao.png') # Pasta images
 plt.close()
 
-print("Arquivos gerados: distribuicao_gpa.png, boxplot_gpa.png, matriz_correlação.png")
+print("Processamento concluído. Imagens salvas na pasta 'images/'.")

@@ -1,10 +1,11 @@
 # Pasta do ambiente virtual (não deve ir para o Git)
 venv/
+images/
 
 # Gráficos gerados automaticamente
 distribuicao_gpa.png
 boxplot_gpa.png
-matriz_correlação.png
+matriz_correlacao.png
 
 # Pastas de configuração do VS Code e arquivos de sistema
 .vscode/
