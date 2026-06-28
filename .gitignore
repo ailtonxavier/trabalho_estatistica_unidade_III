@@ -3,6 +3,8 @@ venv/
 
 # Gráficos gerados automaticamente
 distribuicao_gpa.png
+boxplot_gpa.png
+matriz_correlação.png
 
 # Pastas de configuração do VS Code e arquivos de sistema
 .vscode/
