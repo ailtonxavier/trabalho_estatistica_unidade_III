@@ -8,24 +8,23 @@ Este repositório contém a análise estatística realizada sobre a base de dado
 * **Referência:** [Kaggle - AI Impact on Students Dataset](https://www.kaggle.com/datasets/laveshjadon/ai-impact-on-students)
 
 ## 2. Estrutura do Projeto
-* `db.csv`: Base de dados original contendo os registros dos estudantes.
-* `main.py`: Script principal que realiza a limpeza, processamento, ANOVA, Regressão Linear e geração de gráficos.
-* `requirements.txt`: Dependências necessárias para executar o ambiente.
-* `distribuicao_gpa.png`: Gráfico de distribuição do GPA Final.
-* `boxplot_gpa.png`: Gráfico de caixa para identificação de outliers do GPA Final.
-* `matriz_correlação.png`: Mapa de calor da correlação entre as variáveis quantitativas.
+* `database/`: Contém o arquivo `dados_estudantes.csv`.
+* `images/`: Contém os gráficos gerados automaticamente (`.png`):
+    * Distribuições e Boxplots individuais;
+    * Matriz de correlação;
+    * Boxplot da ANOVA.
+* `results/`: Contém o arquivo `resultado_regressao.txt` com o resumo estatístico do modelo.
+* `main.py`: Script principal de processamento e análise.
+* `requirements.txt`: Dependências do projeto.
 
 ## 3. Metodologia
-O pipeline de análise foi dividido conforme as exigências da disciplina:
-1. **Limpeza de Dados:** Tratamento de valores nulos substituindo-os pela média (variáveis quantitativas) ou moda (variáveis qualitativas).
-2. **Análise Exploratória:** Geração de estatísticas descritivas e visualização através de histogramas, boxplots e matriz de correlação (com tradução de termos para o português).
-3. **Análise de Variância (ANOVA):** Comparação das médias de GPA Final entre diferentes níveis de risco de Burnout, seguida por teste de Tukey (se aplicável).
-4. **Regressão Linear Múltipla:** Ajuste de modelo para explicar o `GPA Final` em função do `GPA Pré-Semestre`, `Horas IA Semanal` e `Horas Estudo Tradicional`, incluindo testes de normalidade (Jarque-Bera) e homocedasticidade (Breusch-Pagan).
+O pipeline de análise foi estruturado nas seguintes etapas:
+1. **Limpeza de Dados:** Tratamento de valores nulos utilizando média (quantitativas) e moda (qualitativas).
+2. **Análise Exploratória:** Geração de estatísticas descritivas visuais (histogramas e boxplots) e mapa de calor de correlação.
+3. **Análise de Variância (ANOVA):** Comparação das médias de GPA entre níveis de Risco de Burnout, com representação visual.
+4. **Regressão Linear Múltipla:** Modelagem do `GPA Final` em função de `GPA Pré-Semestre`, `Horas IA` e `Horas de Estudo Tradicional`, incluindo diagnósticos de normalidade (Jarque-Bera) e homocedasticidade (Breusch-Pagan).
 
 ## 4. Como Executar
-Para rodar este projeto em sua máquina:
-
-1. Certifique-se de ter o Python 3.12+ instalado.
-2. Instale as dependências:
+1. Instale as dependências:
    ```bash
    pip install -r requirements.txt
