@@ -1,0 +1,14 @@
+# Pasta do ambiente virtual (não deve ir para o Git)
+venv/
+
+# Gráficos gerados automaticamente
+distribuicao_gpa.png
+
+# Pastas de configuração do VS Code e arquivos de sistema
+.vscode/
+__pycache__/
+.DS_Store
+*.pyc
+
+# Arquivos temporários de teste ou logs (se houver)
+*.log
