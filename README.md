@@ -9,22 +9,23 @@ Este repositório contém a análise estatística realizada sobre a base de dado
 
 ## 2. Estrutura do Projeto
 * `db.csv`: Base de dados original contendo os registros dos estudantes.
-* `main.py`: Script principal que realiza a limpeza, processamento, ANOVA e Regressão Linear.
+* `main.py`: Script principal que realiza a limpeza, processamento, ANOVA, Regressão Linear e geração de gráficos.
 * `requirements.txt`: Dependências necessárias para executar o ambiente.
-* `distribuicao_gpa.png`: Gráfico gerado automaticamente com a distribuição do GPA Final.
+* `distribuicao_gpa.png`: Gráfico de distribuição do GPA Final.
+* `boxplot_gpa.png`: Gráfico de caixa para identificação de outliers do GPA Final.
+* `matriz_correlação.png`: Mapa de calor da correlação entre as variáveis quantitativas.
 
 ## 3. Metodologia
 O pipeline de análise foi dividido conforme as exigências da disciplina:
 1. **Limpeza de Dados:** Tratamento de valores nulos substituindo-os pela média (variáveis quantitativas) ou moda (variáveis qualitativas).
-2. **Análise de Variância (ANOVA):** Comparação das médias de GPA Final entre diferentes níveis de risco de Burnout, seguida por teste de Tukey para identificação de diferenças entre grupos.
-3. **Regressão Linear Múltipla:** Ajuste de modelo para explicar o `Post_Semester_GPA` em função do `Pre_Semester_GPA`, `Weekly_GenAI_Hours` e `Traditional_Study_Hours`.
+2. **Análise Exploratória:** Geração de estatísticas descritivas e visualização através de histogramas, boxplots e matriz de correlação (com tradução de termos para o português).
+3. **Análise de Variância (ANOVA):** Comparação das médias de GPA Final entre diferentes níveis de risco de Burnout, seguida por teste de Tukey (se aplicável).
+4. **Regressão Linear Múltipla:** Ajuste de modelo para explicar o `GPA Final` em função do `GPA Pré-Semestre`, `Horas IA Semanal` e `Horas Estudo Tradicional`, incluindo testes de normalidade (Jarque-Bera) e homocedasticidade (Breusch-Pagan).
 
 ## 4. Como Executar
 Para rodar este projeto em sua máquina:
 
-1. Certifique-se de ter o Python 3.12 instalado.
-2. Crie um ambiente virtual e instale as dependências:
+1. Certifique-se de ter o Python 3.12+ instalado.
+2. Instale as dependências:
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # No Windows use: venv\Scripts\activate
    pip install -r requirements.txt
