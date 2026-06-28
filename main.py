@@ -4,14 +4,16 @@ import scipy.stats as stats
 import statsmodels.api as sm
 import seaborn as sns
 import os
+from statsmodels.stats.diagnostic import het_breuschpagan
 
 # 1. PREPARAÇÃO DO AMBIENTE
 if not os.path.exists('images'): os.makedirs('images')
 
-# 2. CARREGAMENTO DOS DADOS (Nome atualizado)
+# 2. CARREGAMENTO DOS DADOS
+# Certifique-se de que o arquivo esteja em: database/dados_estudantes.csv
 df = pd.read_csv('database/dados_estudantes.csv')
 
-# 3. LIMPEZA DOS DADOS (Etapa 2)
+# 3. LIMPEZA DOS DADOS (Etapa 2 do PDF)
 for col in df.columns:
     if df[col].dtype in ['float64', 'int64']:
         df[col] = df[col].fillna(df[col].mean())
@@ -27,7 +29,8 @@ traducao = {
     'Burnout_Risk_Level': 'Risco Burnout'
 }
 
-# 4. ANÁLISE EXPLORATÓRIA (Etapa 3 - Gráficos)
+# 4. ANÁLISE EXPLORATÓRIA (Etapa 3 do PDF)
+# Gera gráficos individuais para cada variável quantitativa
 quantitativas = ['Pre_Semester_GPA', 'Weekly_GenAI_Hours', 'Traditional_Study_Hours', 'Post_Semester_GPA']
 df_plot = df.rename(columns=traducao)
 
@@ -43,7 +46,7 @@ for col in [traducao[c] for c in quantitativas]:
     plt.savefig(f'images/estatistica_{col.replace(" ", "_")}.png')
     plt.close()
 
-# 5. MATRIZ DE CORRELAÇÃO (Etapa 4)
+# 5. MATRIZ DE CORRELAÇÃO (Etapa 4 do PDF)
 df_matriz = df.select_dtypes(include=['float64', 'int64']).rename(columns=traducao)
 plt.figure(figsize=(10, 8))
 sns.heatmap(df_matriz.corr(), annot=True, cmap='coolwarm', fmt=".2f", annot_kws={"size": 8})
@@ -52,14 +55,19 @@ plt.tight_layout()
 plt.savefig('images/matriz_correlacao.png')
 plt.close()
 
-# 6. ANOVA E GRÁFICO (Etapa 6)
+# 6. ANOVA E GRÁFICO (Etapa 6 do PDF)
+# Traduzindo e ordenando o risco de burnout
+traducao_burnout = {'Low': 'Baixo', 'Medium': 'Médio', 'High': 'Alto'}
+df['Risco_Burnout_PT'] = df['Burnout_Risk_Level'].map(traducao_burnout)
+df['Risco_Burnout_PT'] = pd.Categorical(df['Risco_Burnout_PT'], categories=['Baixo', 'Médio', 'Alto'], ordered=True)
+
 plt.figure(figsize=(8, 5))
-sns.boxplot(x='Burnout_Risk_Level', y='Post_Semester_GPA', data=df)
+sns.boxplot(x='Risco_Burnout_PT', y='Post_Semester_GPA', data=df)
 plt.title('GPA Final por Nível de Risco de Burnout')
 plt.savefig('images/anova_boxplot.png')
 plt.close()
 
-# 7. REGRESSÃO LINEAR MÚLTIPLA (Etapa 7)
+# 7. REGRESSÃO LINEAR MÚLTIPLA (Etapa 7 do PDF)
 y = df['Post_Semester_GPA']
 X = sm.add_constant(df[['Pre_Semester_GPA', 'Weekly_GenAI_Hours', 'Traditional_Study_Hours']])
 modelo = sm.OLS(y, X).fit()
@@ -71,4 +79,9 @@ print("="*60)
 print(modelo.summary())
 
 # Teste de Normalidade dos Resíduos
-jb_stat, jb_pval = stats.jarque_bera
+jb_stat, jb_pval = stats.jarque_bera(modelo.resid)
+print(f"\nJarque-Bera (Normalidade): p-valor = {jb_pval:.4e}")
+
+# Teste de Homocedasticidade
+bp_test = het_breuschpagan(modelo.resid, modelo.model.exog)
+print(f"Teste Breusch-Pagan (Homocedasticidade): p-valor = {bp_test[1]:.4e}")
