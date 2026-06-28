@@ -1,6 +1,7 @@
 # Pasta do ambiente virtual (não deve ir para o Git)
 venv/
 images/
+results/
 
 # Gráficos gerados automaticamente
 distribuicao_gpa.png
