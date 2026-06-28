@@ -4,7 +4,7 @@ Dep. Variable:      Post_Semester_GPA   R-squared:                       0.879
 Model:                            OLS   Adj. R-squared:                  0.879
 Method:                 Least Squares   F-statistic:                 1.212e+05
 Date:                Sun, 28 Jun 2026   Prob (F-statistic):               0.00
-Time:                        14:10:27   Log-Likelihood:                 16964.
+Time:                        14:14:55   Log-Likelihood:                 16964.
 No. Observations:               50000   AIC:                        -3.392e+04
 Df Residuals:                   49996   BIC:                        -3.388e+04
 Df Model:                           3                                         
